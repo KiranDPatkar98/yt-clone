@@ -6,7 +6,7 @@ import { MdNotifications, MdApps } from 'react-icons/md';
 
 const Header = ({ handleToggleSideBar }) => {
   return (
-    <div className="border border-dark header">
+    <div className="header">
       <FaBars
         className="header_menu"
         size={26}
