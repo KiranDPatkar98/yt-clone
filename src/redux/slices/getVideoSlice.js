@@ -21,8 +21,8 @@ export const getPopularVideos = createAsyncThunk(
   }
 );
 
-export const getSearchedVideos = createAsyncThunk(
-  'videos/getSearchedVideos',
+export const getCategoriesVideos = createAsyncThunk(
+  'videos/getCategoriesVideos',
   async (searchValue, { dispatch, getState }) => {
     const state = getState();
     console.log(state, 'IAm state');
@@ -71,17 +71,17 @@ const getVideoSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(getSearchedVideos.pending, (state) => {
+      .addCase(getCategoriesVideos.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getSearchedVideos.fulfilled, (state, action) => {
+      .addCase(getCategoriesVideos.fulfilled, (state, action) => {
         state.loading = false;
         state.activeCategory = 'All';
         const { items, nextPageToken } = action.payload;
         state.videos = items;
         state.nextPageToken = nextPageToken;
       })
-      .addCase(getSearchedVideos.rejected, (state, action) => {
+      .addCase(getCategoriesVideos.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './categories.scss';
-import { getSearchedVideos } from '../../redux/slices/getVideoSlice';
+import { getCategoriesVideos } from '../../redux/slices/getVideoSlice';
 
 const keywords = [
   'All',
@@ -19,7 +19,7 @@ const CategoriesBar = () => {
 
   const handleClick = (value) => {
     setActiveElement(value);
-    dispatch(getSearchedVideos(value));
+    dispatch(getCategoriesVideos(value));
   };
 
   return (
