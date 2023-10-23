@@ -1,14 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import auth from './slices/authSlice';
-
-// const state = {
-//   name: 'Kiran',
-//   age: 21,
-// };
+import videos from './slices/getVideoSlice';
 
 const rootReducer = combineReducers({
   auth,
+  videos,
 });
 
 const store = configureStore({

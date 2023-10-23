@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './home_screen.scss';
 import Video from '../../components/video/Video';
 import CategoriesBar from '../../components/categoriesBar/CategoriesBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPopularVideos } from '../../redux/slices/getVideoSlice';
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+  const { videos } = useSelector((state) => state.videos);
+
+  useEffect(() => {
+    dispatch(getPopularVideos());
+  }, [dispatch]);
+
   return (
     <Container>
       <CategoriesBar />
       <Row>
-        {[...new Array(20)].map(() => (
+        {videos.map((video) => (
           <Col lg={3} md={4}>
-            <Video />
+            <Video video={video} key={video.id} />
           </Col>
         ))}
       </Row>

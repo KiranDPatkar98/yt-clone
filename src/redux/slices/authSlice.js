@@ -8,6 +8,7 @@ export const authenticateWithGoogle = createAsyncThunk(
   'auth/authenticateWithGoogle',
   async (dispatch) => {
     const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/youtube.force-ssl');
     try {
       const res = await signInWithPopup(auth, provider);
       return res.user; // You can return relevant user data on success
@@ -75,5 +76,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthentication } = authSlice.actions;
+// export const { setAuthentication } = authSlice.actions;
 export default authSlice.reducer;
