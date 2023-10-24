@@ -3,7 +3,8 @@ import request from '../../api';
 
 export const getPopularVideos = createAsyncThunk(
   'videos/getPopularVideos',
-  async (dispatch) => {
+  async (_, { getState }) => {
+    const state = getState();
     try {
       const res = await request.get('/videos', {
         params: {
@@ -11,7 +12,7 @@ export const getPopularVideos = createAsyncThunk(
           chart: 'mostPopular',
           regionCode: 'IN',
           maxResults: 20,
-          pageToken: '',
+          pageToken: state.videos.nextPageToken,
         },
       });
       return res.data;
@@ -23,7 +24,7 @@ export const getPopularVideos = createAsyncThunk(
 
 export const getCategoriesVideos = createAsyncThunk(
   'videos/getCategoriesVideos',
-  async (searchValue, { dispatch, getState }) => {
+  async (searchValue, { getState }) => {
     const state = getState();
     console.log(state, 'IAm state');
     try {
@@ -31,7 +32,7 @@ export const getCategoriesVideos = createAsyncThunk(
         params: {
           part: 'snippet',
           maxResults: 20,
-          pageToken: state.nextPageToken,
+          pageToken: state.videos.nextPageToken,
           q: searchValue,
           type: 'video',
         },
@@ -62,10 +63,13 @@ const getVideoSlice = createSlice({
       })
       .addCase(getPopularVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.activeCategory = 'All';
+
         const { items, nextPageToken } = action.payload;
-        state.videos = items;
+        state.videos = state.activeCategory = 'All'
+          ? [...state.videos, ...items]
+          : items;
         state.nextPageToken = nextPageToken;
+        state.activeCategory = 'All';
       })
       .addCase(getPopularVideos.rejected, (state, action) => {
         state.loading = false;
@@ -76,9 +80,9 @@ const getVideoSlice = createSlice({
       })
       .addCase(getCategoriesVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.activeCategory = 'All';
+        state.activeCategory = 'Active category';
         const { items, nextPageToken } = action.payload;
-        state.videos = items;
+        state.videos = [...state.videos, ...items];
         state.nextPageToken = nextPageToken;
       })
       .addCase(getCategoriesVideos.rejected, (state, action) => {

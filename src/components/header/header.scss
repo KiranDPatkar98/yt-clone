@@ -4,11 +4,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 3 rem;
+    padding: 1rem 3rem;
     background-color: $black-primary;
     height: 10vh;
     // height:30vh;
     width: 100%;
+    z-index: 999;
+    position: fixed;
+    top: 0;
 
     &_menu{
         display: none;
@@ -66,16 +69,18 @@
 
 }
 
-@media(max-width:$breakpoint-small){
+@media (max-width: $breakpoint-small){
     .header{
         padding: 1rem;
 
         form{
             flex:1;
         }
+
         &_menu{
-            display: block;
+            display: block !important;
         }
+
         &_logo{
             display: none;
         }

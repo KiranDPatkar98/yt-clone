@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { AiFillEye } from 'react-icons/ai';
 import './video.scss';
 import request from '../../api';
@@ -60,8 +61,9 @@ const Video = ({ video }) => {
   return (
     <div className="video">
       <div className="video_top">
-        <img src={medium.url} alt="" />
-        <span>{formattedDuration}</span>
+        {/* <img src={medium.url} alt="" /> */}
+        <LazyLoadImage src={medium.url} effect="blur" />
+        <span className="video_duration">{formattedDuration}</span>
       </div>
       <div className="video_title">{title}</div>
       <div className="video_details">
@@ -71,7 +73,8 @@ const Video = ({ video }) => {
         <span> {moment(publishedAt).fromNow()}</span>
       </div>
       <div className="video_channel">
-        <img src={channelIcon} alt="" />
+        {/* <img src={channelIcon} alt="" /> */}
+        <LazyLoadImage src={channelIcon} effect="blur" />
         <p>{channelTitle}</p>
       </div>
     </div>
