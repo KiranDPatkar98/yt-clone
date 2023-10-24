@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import LoginScreen from './screen/loginScreen/LoginScreen';
 import { useSelector } from 'react-redux';
+import WatchScreen from './screen/watchscreen/WatchScreen';
 
 const Layout = ({ children }) => {
   const [isSideBarOpen, setSideBar] = useState(false);
@@ -51,6 +52,14 @@ function App() {
       />
       <Route path="/auth" element={<LoginScreen />} />
       <Route path="/search" element={<h1>Search</h1>} />
+      <Route
+        path="/watch/:id"
+        element={
+          <Layout>
+            <WatchScreen />
+          </Layout>
+        }
+      />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

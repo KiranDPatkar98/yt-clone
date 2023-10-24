@@ -11,7 +11,7 @@ export const getPopularVideos = createAsyncThunk(
           part: 'snippet,contentDetails,statistics',
           chart: 'mostPopular',
           regionCode: 'IN',
-          maxResults: 20,
+          maxResults: 5,
           pageToken: state.videos.nextPageToken,
         },
       });
@@ -26,7 +26,6 @@ export const getCategoriesVideos = createAsyncThunk(
   'videos/getCategoriesVideos',
   async (searchValue, { getState }) => {
     const state = getState();
-    console.log(state, 'IAm state');
     try {
       const res = await request.get('/search', {
         params: {
@@ -37,7 +36,7 @@ export const getCategoriesVideos = createAsyncThunk(
           type: 'video',
         },
       });
-      return res.data;
+      return { res: res.data, activeCategory: searchValue };
     } catch (error) {
       throw error;
     }
@@ -65,9 +64,8 @@ const getVideoSlice = createSlice({
         state.loading = false;
 
         const { items, nextPageToken } = action.payload;
-        state.videos = state.activeCategory = 'All'
-          ? [...state.videos, ...items]
-          : items;
+        state.videos =
+          state.activeCategory === 'All' ? [...state.videos, ...items] : items;
         state.nextPageToken = nextPageToken;
         state.activeCategory = 'All';
       })
@@ -80,10 +78,17 @@ const getVideoSlice = createSlice({
       })
       .addCase(getCategoriesVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.activeCategory = 'Active category';
-        const { items, nextPageToken } = action.payload;
-        state.videos = [...state.videos, ...items];
+
+        const {
+          res: { items, nextPageToken },
+          activeCategory,
+        } = action.payload;
+        state.videos =
+          state.activeCategory === activeCategory
+            ? [...state.videos, ...items]
+            : items;
         state.nextPageToken = nextPageToken;
+        state.activeCategory = activeCategory;
       })
       .addCase(getCategoriesVideos.rejected, (state, action) => {
         state.loading = false;
