@@ -1,44 +1,73 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './videoMetaData.scss';
 import moment from 'moment';
 import numeral from 'numeral';
 import { MdThumbUp, MdThumbDown } from 'react-icons/md';
 import ShowMoreText from 'react-show-more-text';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getChannelDetails,
+  getSubscriptionStatus,
+} from '../../redux/slices/getChannelDetailSlice';
 
-const VideoMetaData = () => {
+const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
+  const dispatch = useDispatch();
+  const { channelId, channelTitle, description, title, publishedAt } =
+    snippet || {};
+  const { viewCount, likeCount, dislikeCount } = statistics || {};
+
+  const { snippet: channelSnippet, statistics: channelStatistics } =
+    useSelector((state) => state.channelDetails.channel);
+
+  const { subscriptionStatus } = useSelector((state) => state.channelDetails);
+
+  useEffect(() => {
+    dispatch(getChannelDetails(channelId));
+    dispatch(getSubscriptionStatus(channelId));
+  }, [channelId, dispatch]);
+
   return (
     <div className="videoMetaData py-2">
       <div className="videoMetaData_top">
-        <h5>Video title</h5>
+        <h5>{title}</h5>
         <div className="d-flex justify-content-between align-items-cente py-1">
           <span>
-            {numeral(1000).format('0.a')} Views •{' '}
-            {moment('2020-06-6').fromNow()}
+            {numeral(viewCount).format('0.a')} Views •
+            {moment(publishedAt).fromNow()}
           </span>
 
           <div>
             <span className="mr-3">
               <MdThumbUp size={26} />
+              {numeral(likeCount).format('0.a')}
             </span>
             <span className="mr-3">
               <MdThumbDown size={26} />
+              {numeral(dislikeCount).format('0.a')}
             </span>
           </div>
         </div>
       </div>
       <div className="videoMetaData_channel d-flex justify-content-between align-items-center my-2 py-3">
         <div className="d-flex">
-          <button className="btn border-0 p-2 m-2">Subscribe</button>
           <img
-            src="http://pngimg.com/uploads/youtube/youtube_PNG2.png"
+            src={channelSnippet?.thumbnails?.default?.url}
             alt="logo"
-            className="rounder-circle mr-3"
+            className="rounded-circle mr-3"
           />
           <div className="d-flex flex-column">
-            <span>KDP</span>
-            <span>{numeral(1000).format('0.a')} Subscribers</span>
+            <span>{channelTitle}</span>
+            <span>
+              {numeral(channelStatistics?.subscriberCount).format('0.a')}
+              Subscribers
+            </span>
           </div>
         </div>
+        <button
+          className={`btn border-0 p-2 m-2 ${subscriptionStatus && 'btn-grey'}`}
+        >
+          {subscriptionStatus ? 'Subscribed' : 'Subscribe'}
+        </button>
       </div>
       <div className="videoMetaData_description">
         <ShowMoreText
@@ -48,17 +77,7 @@ const VideoMetaData = () => {
           anchorClass="showMoreText"
           expanded={false}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-          blanditiis doloremque debitis totam. Quos iste recusandae doloremque
-          laboriosam ipsam expedita fuga facere fugiat, enim quasi in libero!
-          Quidem, cumque pariatur? Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Reprehenderit blanditiis doloremque debitis totam.
-          Quos iste recusandae doloremque laboriosam ipsam expedita fuga facere
-          fugiat, enim quasi in libero! Quidem, cumque pariatur? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Reprehenderit blanditiis
-          doloremque debitis totam. Quos iste recusandae doloremque laboriosam
-          ipsam expedita fuga facere fugiat, enim quasi in libero! Quidem,
-          cumque pariatur?
+          {description}
         </ShowMoreText>
       </div>
     </div>

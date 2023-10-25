@@ -30,7 +30,7 @@ export const getCategoriesVideos = createAsyncThunk(
       const res = await request.get('/search', {
         params: {
           part: 'snippet',
-          maxResults: 20,
+          maxResults: 5,
           pageToken: state.videos.nextPageToken,
           q: searchValue,
           type: 'video',

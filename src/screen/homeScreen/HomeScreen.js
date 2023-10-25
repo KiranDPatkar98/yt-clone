@@ -28,6 +28,7 @@ const HomeScreen = () => {
       dispatch(getCategoriesVideos(activeCategory));
     }
   };
+  console.log(videos, 'iam videos');
 
   return (
     <Container>
