@@ -27,7 +27,7 @@ export const getSubscriptionStatus = createAsyncThunk(
       const res = await request.get('/subscriptions', {
         params: {
           part: 'snippet',
-          forChannelId: id,
+          channelId: id,
           mine: true,
         },
         headers: {

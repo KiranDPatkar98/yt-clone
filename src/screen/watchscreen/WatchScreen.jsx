@@ -7,17 +7,24 @@ import Comments from '../../components/comments/Comments';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getvideoInformation } from '../../redux/slices/videoInformationSlice';
+import { getRelatedVideos } from '../../redux/slices/getRelatedVideoSlice';
 
 const WatchScreen = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(id, 'id');
     dispatch(getvideoInformation(id));
+    dispatch(getRelatedVideos(id));
   }, [dispatch, id]);
 
   const { video, loading } = useSelector((state) => state.selectedVideo);
+
+  const { relatedVideo: videos, loaing: relatedLoading } = useSelector(
+    (state) => state.relatedVideos
+  );
+
+  console.log(videos, 'imhgfhgdjyt');
   return (
     <Row>
       <Col lg={8}>
@@ -39,12 +46,17 @@ const WatchScreen = () => {
         )}
         {/* <VideoMetaData video={video} videoId={id} /> */}
 
-        <Comments />
+        <Comments
+          videoId={id}
+          totalComments={video?.statistics?.commentCount}
+        />
       </Col>
       <Col lg={4}>
-        {[...Array(10)].map(() => (
-          <VideoHorizontal />
-        ))}
+        {videos
+          // ?.filter((video) => video.snippet)
+          ?.map((video, idx) => (
+            <VideoHorizontal video={video} />
+          ))}
       </Col>
     </Row>
   );

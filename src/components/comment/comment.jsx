@@ -2,15 +2,21 @@ import React from 'react';
 import './comment.scss';
 import moment from 'moment';
 
-const comment = () => {
+const comment = ({ comment }) => {
+  const { authorDisplayName, authorProfileImageUrl, publishedAt, textDisplay } =
+    comment;
   return (
     <div className="comment p-2 d-flex">
-      <img src="images/avatar.png" alt="" className="rounded-circle mr-3" />
+      <img
+        src={authorProfileImageUrl}
+        alt="user-profile"
+        className="rounded-circle mr-3"
+      />
       <div className="comment_body">
         <p className="comment_header mb-1">
-          kdp • {moment('2020-05-05').fromNow()}
+          {authorDisplayName} • {moment(publishedAt).fromNow()}
         </p>
-        <p className="mb-0">Nice video DUDE!!!</p>
+        <p className="mb-0">{textDisplay}</p>
       </div>
     </div>
   );

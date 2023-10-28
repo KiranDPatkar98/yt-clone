@@ -47,6 +47,7 @@ const getVideoSlice = createSlice({
   name: 'videos',
   initialState: {
     videos: [],
+    relatedVideo: [],
     nextPageToken: '',
     loading: false,
     error: null,
