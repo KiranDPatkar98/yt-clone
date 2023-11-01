@@ -130,6 +130,10 @@
       @include line-clamp(2);
    }
 
+   &_desc{
+      @include line-clamp(2);
+   }
+
    &__channel {
       img {
          width: 36px;

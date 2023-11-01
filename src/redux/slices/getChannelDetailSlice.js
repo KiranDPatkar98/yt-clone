@@ -22,7 +22,6 @@ export const getSubscriptionStatus = createAsyncThunk(
   'channelInfo/getSubscriptionStatus',
   async (id, { getState }) => {
     const state = getState();
-    console.log(state.auth.accessToken, 'state.auth.accessToken');
     try {
       const res = await request.get('/subscriptions', {
         params: {

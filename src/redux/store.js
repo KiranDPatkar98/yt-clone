@@ -7,6 +7,7 @@ import channelInfo from './slices/getChannelDetailSlice';
 import comments from './slices/getCommentsSlice';
 import relatedVideoInfo from './slices/getRelatedVideoSlice';
 import searchVideosInfo from './slices/serachVideoSlice';
+import subscriptionInfo from './slices/getSubscriptionListSlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   channelDetails: channelInfo,
   commentList: comments,
   searchedVideos: searchVideosInfo,
+  subscriptionList: subscriptionInfo,
 });
 
 const store = configureStore({
