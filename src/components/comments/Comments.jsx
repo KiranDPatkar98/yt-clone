@@ -28,7 +28,7 @@ const Comments = ({ videoId, totalComments }) => {
 
   return (
     <div className="comments">
-      <p>{totalComments} comments</p>
+      <p>{totalComments === 0 ? _comments.length : totalComments} comments</p>
       {/* <div className="comments_form d-flex w-100 my-2">
         <img
           src="http://pngimg.com/uploads/youtube/youtube_PNG2.png"

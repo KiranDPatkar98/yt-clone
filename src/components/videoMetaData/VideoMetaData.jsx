@@ -14,7 +14,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
   const dispatch = useDispatch();
   const { channelId, channelTitle, description, title, publishedAt } =
     snippet || {};
-  const { viewCount, likeCount, dislikeCount } = statistics || {};
+  const { viewCount, likeCount } = statistics || {};
 
   const { snippet: channelSnippet, statistics: channelStatistics } =
     useSelector((state) => state.channelDetails.channel);
@@ -34,18 +34,18 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
         <h5>{title}</h5>
         <div className="d-flex justify-content-between align-items-cente py-1">
           <span>
-            {numeral(viewCount).format('0.a')} Views •
+            {numeral(viewCount).format('0.a')} Views •{' '}
             {moment(publishedAt).fromNow()}
           </span>
 
           <div>
-            <span className="mr-3">
+            <span className="like-btn">
               <MdThumbUp size={26} />
-              {numeral(likeCount).format('0.a')}
+              <span>{numeral(likeCount).format('0.a')}</span>
             </span>
-            <span className="mr-3">
+            <span>
               <MdThumbDown size={26} />
-              {numeral(dislikeCount).format('0.a')}
+              {/* {numeral(dislikeCount).format('0.a')} */}
             </span>
           </div>
         </div>
@@ -55,7 +55,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
           <img
             src={channelSnippet?.thumbnails?.default?.url}
             alt="logo"
-            className="rounded-circle mr-3"
+            className="rounded-circle mr-3 channelIcon"
           />
           <div className="d-flex flex-column">
             <span>{channelTitle}</span>

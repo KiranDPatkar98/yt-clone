@@ -106,6 +106,7 @@ const VideoHorizontal = ({ video, searchScreen, subScreen }) => {
       description,
       title,
       publishedAt,
+      liveBroadcastContent,
       thumbnails: { medium },
       resourceId,
     },
@@ -161,6 +162,7 @@ const VideoHorizontal = ({ video, searchScreen, subScreen }) => {
     } else {
       navigate(`/channel/${_channelId}`);
     }
+    window.scrollTo(0, 0);
   };
 
   const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel';
@@ -183,7 +185,13 @@ const VideoHorizontal = ({ video, searchScreen, subScreen }) => {
           wrapperClassName="videoHorizontal__thumbnail-wrapper"
         />
         {isVideo && (
-          <span className="videoHorizontal__duration">{_duration}</span>
+          <span
+            className={`videoHorizontal__duration ${
+              liveBroadcastContent === 'live' ? 'liveChannel' : ''
+            }`}
+          >
+            {liveBroadcastContent === 'live' ? 'Live' : _duration}
+          </span>
         )}
       </Col>
       <Col

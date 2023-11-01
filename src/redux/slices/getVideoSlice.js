@@ -11,7 +11,7 @@ export const getPopularVideos = createAsyncThunk(
           part: 'snippet,contentDetails,statistics',
           chart: 'mostPopular',
           regionCode: 'IN',
-          maxResults: 5,
+          maxResults: 20,
           pageToken: state.videos.nextPageToken,
         },
       });
@@ -30,7 +30,7 @@ export const getCategoriesVideos = createAsyncThunk(
       const res = await request.get('/search', {
         params: {
           part: 'snippet',
-          maxResults: 5,
+          maxResults: 20,
           pageToken: state.videos.nextPageToken,
           q: searchValue,
           type: 'video',

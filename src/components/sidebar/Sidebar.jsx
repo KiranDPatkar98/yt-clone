@@ -2,20 +2,23 @@ import React from 'react';
 import './sidebar.scss';
 
 import {
-  MdSubscriptions,
+  MdMusicVideo,
   MdExitToApp,
-  MdThumbUp,
-  MdHistory,
-  MdLibraryBooks,
+  MdSportsEsports,
+  MdOutlineLocalMovies,
+  MdSportsCricket,
+  MdTrendingUp,
   MdHome,
-  MdSentimentDissatisfied,
 } from 'react-icons/md';
+
+import { SiYoutubegaming } from 'react-icons/si';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/authSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ isSideBarOpen, handleToggleSideBar }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <nav
       className={`sidebar ${isSideBarOpen && 'open'}`}
@@ -27,29 +30,27 @@ const Sidebar = ({ isSideBarOpen, handleToggleSideBar }) => {
           <span>Home</span>
         </li>
       </Link>
-      <Link to="/feed/subscriptions">
-        <li>
-          <MdSubscriptions size={23} />
-          <span>Subscription</span>
-        </li>
-      </Link>
-      <li>
-        <MdThumbUp size={23} />
-        <span>Liked Video</span>
+      <li onClick={() => navigate(`/search/music`)}>
+        <MdMusicVideo size={23} />
+        <span>Music</span>
       </li>
-      <li>
-        <MdHistory size={23} />
-        <span>History</span>
+      <li onClick={() => navigate(`/search/gaming`)}>
+        <MdSportsEsports size={23} />
+        <span>Gaming</span>
+      </li>
+      <li onClick={() => navigate(`/search/movies`)}>
+        <MdOutlineLocalMovies size={23} />
+        <span>Movies</span>
       </li>
 
-      <li>
-        <MdLibraryBooks size={23} />
-        <span>Library</span>
+      <li onClick={() => navigate(`/search/sports`)}>
+        <MdSportsCricket size={23} />
+        <span>Sports</span>
       </li>
 
-      <li>
-        <MdSentimentDissatisfied size={23} />
-        <span> I don't know</span>
+      <li onClick={() => navigate(`/search/trending`)}>
+        <MdTrendingUp size={23} />
+        <span>Trending</span>
       </li>
 
       <hr />

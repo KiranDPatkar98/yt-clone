@@ -2,7 +2,7 @@ import React from 'react';
 import './header.scss';
 import { FaBars } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { MdNotifications, MdApps } from 'react-icons/md';
+// import { MdNotifications, MdApps } from 'react-icons/md';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,11 @@ const Header = ({ handleToggleSideBar }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search/${input}`);
+    setInput('');
   };
+  const photoUrl =
+    JSON.parse(sessionStorage.getItem('yt-user'))?.photoURL || '';
+
   return (
     <div className="header">
       <FaBars
@@ -37,11 +41,11 @@ const Header = ({ handleToggleSideBar }) => {
           <AiOutlineSearch size={22} />
         </button>
       </form>
-      <dic className="header_icon">
-        <MdNotifications size={28} />
-        <MdApps size={28} />
-        <img alt="avatar" src="images/avatar.png" />
-      </dic>
+      <div className="header_icon">
+        {/* <MdNotifications size={28} />
+        <MdApps size={28} /> */}
+        <img alt="avatar" src={photoUrl} />
+      </div>
     </div>
   );
 };

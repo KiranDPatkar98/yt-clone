@@ -7,8 +7,8 @@ import channelInfo from './slices/getChannelDetailSlice';
 import comments from './slices/getCommentsSlice';
 import relatedVideoInfo from './slices/getRelatedVideoSlice';
 import searchVideosInfo from './slices/serachVideoSlice';
-import subscriptionInfo from './slices/getSubscriptionListSlice';
-import channelVideos from './slices/getVideosByChannelSlice';
+// import subscriptionInfo from './slices/getSubscriptionListSlice';
+// import channelVideos from './slices/getVideosByChannelSlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -18,8 +18,8 @@ const rootReducer = combineReducers({
   channelDetails: channelInfo,
   commentList: comments,
   searchedVideos: searchVideosInfo,
-  subscriptionList: subscriptionInfo,
-  channelVideos,
+  // subscriptionList: subscriptionInfo,
+  // channelVideos,
 });
 
 const store = configureStore({
