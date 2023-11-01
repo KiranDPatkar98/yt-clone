@@ -1,6 +1,14 @@
 @import "../../main.scss";
 
 .sidebar{
+
+
+    a{
+        text-decoration: none !important;
+        color: inherit;
+    }
+
+
 background: $black-primary;
 display: flex;
 flex-direction: column;
