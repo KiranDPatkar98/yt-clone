@@ -107,8 +107,8 @@ const VideoHorizontal = ({ video, searchScreen, subScreen }) => {
       title,
       publishedAt,
       thumbnails: { medium },
+      resourceId,
     },
-    resourceId,
   } = video;
 
   const [views, setViews] = useState(null);

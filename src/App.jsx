@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import WatchScreen from './screen/watchscreen/WatchScreen';
 import SearchScreen from './screen/SearchScreen';
 import SubscriptionScreen from './screen/subscriptionScreen/SubscriptionScreen';
+import ChannelScreen from './screen/channelScreen/ChannelScreen';
 
 const Layout = ({ children }) => {
   const [isSideBarOpen, setSideBar] = useState(false);
@@ -79,7 +80,11 @@ function App() {
       />
       <Route
         path="/channel/:channelId"
-        element={<Layout>Channel screen</Layout>}
+        element={
+          <Layout>
+            <ChannelScreen />
+          </Layout>
+        }
       />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

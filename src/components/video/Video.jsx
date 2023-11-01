@@ -7,7 +7,7 @@ import moment from 'moment';
 import numeral from 'numeral';
 import { useNavigate } from 'react-router-dom';
 
-const Video = ({ video }) => {
+const Video = ({ video, channelScreen }) => {
   const {
     id,
     snippet: {
@@ -17,6 +17,7 @@ const Video = ({ video }) => {
       publishedAt,
       thumbnails: { medium },
     },
+    contentDetails,
   } = video;
 
   const [views, setViews] = useState(null);
@@ -26,7 +27,7 @@ const Video = ({ video }) => {
   const seconds = moment.duration(duration).asSeconds();
   const formattedDuration = moment.utc(seconds * 1000).format('mm:ss');
 
-  const videoId = id?.videoId || id;
+  const videoId = id?.videoId || contentDetails?.videoId || id;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,11 +79,13 @@ const Video = ({ video }) => {
         </span>
         <span> {moment(publishedAt).fromNow()}</span>
       </div>
-      <div className="video_channel">
-        {/* <img src={channelIcon} alt="" /> */}
-        <LazyLoadImage src={channelIcon} effect="blur" />
-        <p>{channelTitle}</p>
-      </div>
+      {!channelScreen && (
+        <div className="video_channel">
+          {/* <img src={channelIcon} alt="" /> */}
+          <LazyLoadImage src={channelIcon} effect="blur" />
+          <p>{channelTitle}</p>
+        </div>
+      )}
     </div>
   );
 };
