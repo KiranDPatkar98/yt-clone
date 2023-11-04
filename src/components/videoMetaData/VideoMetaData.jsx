@@ -60,7 +60,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
           <div className="d-flex flex-column">
             <span>{channelTitle}</span>
             <span>
-              {numeral(channelStatistics?.subscriberCount).format('0.a')}
+              {numeral(channelStatistics?.subscriberCount).format('0.a')}{' '}
               Subscribers
             </span>
           </div>
